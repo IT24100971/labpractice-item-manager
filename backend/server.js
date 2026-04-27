@@ -1,3 +1,7 @@
+import dns from 'node:dns/promises';
+
+// Force DNS servers
+dns.setServers(['1.1.1.1', '8.8.8.8']);
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -20,7 +24,7 @@ app.use("/api/items", itemRoutes);
 const PORT = process.env.PORT || 5000;
 
 mongoose
-  .connect("mongodb+srv://test:Test1234@cluster0.oqlnauq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
     app.listen(PORT, () => {
